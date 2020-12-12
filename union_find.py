@@ -5,8 +5,8 @@ class UnionFind:
 
     def __init__(self, elements: int):
         self._elements = elements
-        self._parents = np.zeros(shape=(elements,))
-        self._ranks = np.zeros(shape=(elements,))
+        self._parents = np.zeros(shape=(elements,), dtype='int32')
+        self._ranks = np.zeros(shape=(elements,), dtype='int32')
         for i in range(elements):
             self._parents[i] = i
     
@@ -29,6 +29,9 @@ class UnionFind:
     def union(self, first: int, second: int):
         fParent = self.find(first)
         sParent = self.find(second)
+
+        if fParent == sParent:
+            return
 
         maxRank = fParent if self._ranks[fParent] >= self._ranks[sParent] else sParent
         minRank = fParent if self._ranks[fParent] < self._ranks[sParent] else sParent
